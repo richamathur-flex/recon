@@ -828,6 +828,7 @@ footer {
         <div>Author · R. Mathur</div>
         <div>Stack · Python · LangGraph</div>
         <div>Deploy · Fly + Render</div>
+        <div>Progress · Day 2 / 14 · Agent #1 ✓</div>
         <div><span class="stamp">Portfolio Build</span></div>
       </div>
     </div>
@@ -873,13 +874,16 @@ footer {
   <nav class="tabs-nav">
     <ul class="tabs-list" role="tablist">
       <li><button class="tab-btn active" data-tab="overview"><span class="num">01</span>Overview</button></li>
-      <li><button class="tab-btn" data-tab="cycle"><span class="num">02</span>End-to-End Cycle</button></li>
-      <li><button class="tab-btn" data-tab="stack"><span class="num">03</span>Tech Stack</button></li>
-      <li><button class="tab-btn" data-tab="setup"><span class="num">04</span>Setup</button></li>
-      <li><button class="tab-btn" data-tab="git"><span class="num">05</span>Git</button></li>
-      <li><button class="tab-btn" data-tab="python"><span class="num">06</span>Python</button></li>
-      <li><button class="tab-btn" data-tab="api"><span class="num">07</span>APIs</button></li>
-      <li><button class="tab-btn" data-tab="learn"><span class="num">08</span>Learning Path</button></li>
+      <li><button class="tab-btn" data-tab="progress"><span class="num">02</span>Progress Log</button></li>
+      <li><button class="tab-btn" data-tab="agents"><span class="num">03</span>Agents</button></li>
+      <li><button class="tab-btn" data-tab="cycle"><span class="num">04</span>End-to-End Cycle</button></li>
+      <li><button class="tab-btn" data-tab="stack"><span class="num">05</span>Tech Stack</button></li>
+      <li><button class="tab-btn" data-tab="setup"><span class="num">06</span>Setup</button></li>
+      <li><button class="tab-btn" data-tab="git"><span class="num">07</span>Git</button></li>
+      <li><button class="tab-btn" data-tab="python"><span class="num">08</span>Python</button></li>
+      <li><button class="tab-btn" data-tab="api"><span class="num">09</span>APIs</button></li>
+      <li><button class="tab-btn" data-tab="errors"><span class="num">10</span>Errors &amp; Fixes</button></li>
+      <li><button class="tab-btn" data-tab="learn"><span class="num">11</span>Learning Path</button></li>
     </ul>
   </nav>
 
@@ -954,7 +958,355 @@ footer {
   </section>
 
   <!-- ============================================================
-       TAB 02 · END-TO-END CYCLE
+       TAB 02 · PROGRESS LOG
+       ============================================================ -->
+  <section class="tab-panel" id="progress">
+    <div class="section-marker">§02 · What's Been Built</div>
+    <h2>Step-by-step <em>build journal</em></h2>
+
+    <p class="intro">
+      Every commit, every decision, every problem solved. This is the chronological record of how Recon went from empty folder to working AI agent. Use this in interviews when asked <em>"walk me through how you built this."</em>
+    </p>
+
+    <h3>Day 1 · Foundation</h3>
+
+    <div class="pipeline">
+      <div class="pipeline-step">
+        <div class="num-badge">✓</div>
+        <div class="content">
+          <h4>Created project folder structure</h4>
+          <div class="tech">Outcome: clean Python project layout</div>
+          <p>Set up <code>recon/</code> with subfolders for source code (<code>src/</code>), test scripts (<code>scripts/</code>), tests (<code>tests/</code>), and documentation (<code>docs/</code>). <strong>Why it matters:</strong> separating concerns from day one signals professional engineering — interviewers notice messy repos immediately.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">✓</div>
+        <div class="content">
+          <h4>Initialized Git and configured identity</h4>
+          <div class="tech">Outcome: version control active, commits attributed</div>
+          <p>Ran <code>git init</code>, set <code>user.name</code> and <code>user.email</code>. Created <code>.gitignore</code> to exclude <code>.venv</code>, <code>.env</code>, <code>__pycache__</code>. <strong>Interview talking point:</strong> "I treat <code>.gitignore</code> as a security boundary, not just a cleanup tool."</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">✓</div>
+        <div class="content">
+          <h4>Created Python virtual environment</h4>
+          <div class="tech">Outcome: isolated dependencies in .venv/</div>
+          <p>Used <code>python -m venv .venv</code>. <strong>Why it matters:</strong> a venv prevents your project's dependencies from polluting your system Python, and lets you pin exact versions. This is non-negotiable in production work.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">✓</div>
+        <div class="content">
+          <h4>Provisioned API keys for Pinecone &amp; Groq</h4>
+          <div class="tech">Outcome: free-tier access to vector DB and LLM</div>
+          <p>Signed up at pinecone.io and console.groq.com, generated keys, stored in <code>.env</code> (never committed). <strong>Cost so far: $0/month.</strong> Pinecone Starter gives 2GB and 100K vectors; Groq free tier offers Llama 3.3 70B at sub-second latency.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">✓</div>
+        <div class="content">
+          <h4>Wrote &amp; ran smoke test</h4>
+          <div class="tech">File: scripts/smoke_test.py</div>
+          <p>50 lines of code that prove the entire stack: download a webpage, embed with Nomic Embed (768-dim local model), upsert to Pinecone, query, verify the result. <mark>Output: <code>✅ Pipeline working</code></mark>. <strong>Interview gold:</strong> "I prove infrastructure works end-to-end before writing application code — saves hours of debugging."</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">✓</div>
+        <div class="content">
+          <h4>Pushed to GitHub</h4>
+          <div class="tech">Outcome: public repo at github.com/richamathur-flex/recon</div>
+          <p>Created public repo, ran <code>git remote add origin</code>, pushed initial commit. <strong>Why public:</strong> portfolio visibility. Recruiters can find it without you sending a link.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Day 2 · First Real Agent</h3>
+
+    <div class="pipeline">
+      <div class="pipeline-step">
+        <div class="num-badge">✓</div>
+        <div class="content">
+          <h4>Built centralized config with Pydantic Settings</h4>
+          <div class="tech">File: src/config.py</div>
+          <p>Created a <code>Settings</code> class that loads all environment variables and validates them at startup. If any required key is missing, the app fails immediately with a clear error — no mysterious crashes deep in agent code three hours later. <strong>Pattern name:</strong> "fail-fast configuration."</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">✓</div>
+        <div class="content">
+          <h4>Defined typed output schemas</h4>
+          <div class="tech">File: src/schemas.py · Library: Pydantic v2</div>
+          <p>Created <code>CompanyProfile</code> Pydantic model with strict types: <code>company_name</code>, <code>value_proposition</code>, <code>target_customer</code>, <code>key_features</code> (list, max 5), <code>positioning_keywords</code> (list, max 5), <code>source_url</code>. <strong>Why this matters:</strong> the LLM is forced into a contract. Validation failures become visible bugs, not silent corruption.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">✓</div>
+        <div class="content">
+          <h4>Wrote Groq LLM client wrapper</h4>
+          <div class="tech">File: src/llm.py</div>
+          <p>Built <code>chat_json()</code> — a thin wrapper that calls Groq's <code>/chat/completions</code> endpoint with <code>response_format={"type": "json_object"}</code>. Forces the model to return valid JSON. <strong>Future-proof:</strong> when we add retries, logging, and LangSmith tracing, we edit one file.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">✓</div>
+        <div class="content">
+          <h4>Built the Web Intelligence Agent</h4>
+          <div class="tech">File: src/agents/web_intel.py</div>
+          <p>Five-step pattern: <strong>fetch</strong> HTML with httpx → <strong>clean</strong> with selectolax (strip scripts/styles/nav) → <strong>prompt</strong> Groq with structured system prompt → <strong>parse</strong> JSON response → <strong>validate</strong> with Pydantic. Every other agent in this project will follow this exact pattern.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">✓</div>
+        <div class="content">
+          <h4>Tested on 4 real companies</h4>
+          <div class="tech">Targets: Linear · Notion · Stripe · Supabase</div>
+          <p>Ran <code>python -m scripts.run_web_intel &lt;url&gt; &lt;name&gt;</code> against four sites. Each returned a different, accurate <code>CompanyProfile</code>. <strong>Linear</strong> → "product development system for AI-era teams". <strong>Notion</strong> → "single platform with AI-powered agents". <strong>Supabase</strong> → "Postgres development platform with built-in auth". <strong>This is real, working AI</strong> — not a demo, not a mock.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">✓</div>
+        <div class="content">
+          <h4>Survived three real engineering problems</h4>
+          <div class="tech">See: §10 Errors &amp; Fixes for full details</div>
+          <p>(1) <code>ModuleNotFoundError</code> — solved by switching to <code>python -m</code>. (2) GitHub blocked push due to leaked Groq key in <code>.env</code> — recovered by amending the commit. (3) <code>__pycache__</code> files cluttering Git — cleaned with <code>git rm -r --cached</code>. <mark>These three problems are exactly what interviewers ask about.</mark></p>
+        </div>
+      </div>
+    </div>
+
+    <h3>What's queued next</h3>
+
+    <div class="three-col">
+      <div class="card">
+        <div class="card-label">Day 3-4 · NEXT</div>
+        <h3>Vector store abstraction</h3>
+        <p>Wrap Pinecone behind a <code>VectorStore</code> Protocol so Qdrant becomes a drop-in alternative. Interview line: <em>"I built a pluggable retrieval layer."</em></p>
+      </div>
+      <div class="card">
+        <div class="card-label">Day 5-6</div>
+        <h3>Hiring Signals Agent</h3>
+        <p>Pull job postings from Greenhouse/Lever APIs to detect strategic moves. Same five-step pattern as Web Intel.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Day 7-8</div>
+        <h3>LangGraph orchestration</h3>
+        <p>Wire both agents into a state machine that runs them in parallel and synthesizes outputs.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="tag">Interview Pitch · 60 Seconds</span>
+      "I built a working AI agent that takes a company URL and returns structured competitive intelligence. The pipeline fetches the homepage, cleans the HTML, prompts Llama 3.3 via Groq with a strict JSON schema, validates the output with Pydantic, and returns a typed object. I tested it on four companies — Linear, Notion, Stripe, Supabase — and got accurate, differentiated profiles for each. The key architectural choice was treating the schema as a contract: the LLM doesn't return prose, it fills a form."
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TAB 03 · AGENTS
+       ============================================================ -->
+  <section class="tab-panel" id="agents">
+    <div class="section-marker">§03 · Specialist Agents</div>
+    <h2>Why we use <em>agents</em>, not just one big prompt</h2>
+
+    <p class="intro">
+      A naive approach to this project would be: stuff everything into one giant LLM prompt and hope. That fails. Agents are how you build reliable AI systems. Here's the philosophy, the pattern, and what each agent does.
+    </p>
+
+    <h3>The case for specialist agents</h3>
+
+    <div class="two-col">
+      <div>
+        <h4>Why one giant prompt fails</h4>
+        <p>If you ask an LLM to <em>"research Linear comprehensively"</em>, three things go wrong:</p>
+        <ol>
+          <li><strong>Context window explosion.</strong> You can't fit a homepage + job postings + reviews + filings + news into one prompt.</li>
+          <li><strong>Output entropy.</strong> The longer the answer, the more the model drifts, hallucinates, and forgets earlier instructions.</li>
+          <li><strong>No parallelism.</strong> One sequential prompt cannot fetch from five APIs simultaneously.</li>
+        </ol>
+      </div>
+      <div>
+        <h4>What agents fix</h4>
+        <p>An <strong>agent</strong> is a small, specialized worker with one job, one prompt, one output schema. By splitting the problem:</p>
+        <ol>
+          <li><strong>Each prompt stays small.</strong> Fits comfortably in context.</li>
+          <li><strong>Each output is validated.</strong> Pydantic catches errors per-agent, not at the end.</li>
+          <li><strong>Agents run in parallel.</strong> <code>asyncio.gather</code> lets five agents work concurrently — a 5x latency win.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="tag">Interview Soundbite</span>
+      "I split the problem into specialist agents because reliability scales with prompt simplicity. One LLM call doing one job with one schema is testable; one LLM call doing six jobs is not."
+    </div>
+
+    <h3>The five-step agent pattern (memorize this)</h3>
+
+    <p>Every agent in Recon follows this same skeleton. Once you understand it for one agent, you understand them all.</p>
+
+    <div class="pipeline">
+      <div class="pipeline-step">
+        <div class="num-badge">1</div>
+        <div class="content">
+          <h4>Fetch — get raw data from a source</h4>
+          <div class="tech">httpx · Playwright · official API SDKs</div>
+          <p>The agent calls an external data source: a website, a JSON API, an RSS feed, a database. No interpretation yet — just retrieval.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="num-badge">2</div>
+        <div class="content">
+          <h4>Clean — remove noise, keep signal</h4>
+          <div class="tech">selectolax · regex · structural parsing</div>
+          <p>Strip HTML scripts and navigation, normalize whitespace, truncate to fit the LLM context window. The cleaner the input, the cheaper the output.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="num-badge">3</div>
+        <div class="content">
+          <h4>Prompt — ask the LLM with a strict contract</h4>
+          <div class="tech">Groq · JSON mode · system + user message</div>
+          <p>System prompt defines the agent's role and output schema. User message contains the cleaned data. <code>response_format={"type": "json_object"}</code> guarantees parseable JSON.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="num-badge">4</div>
+        <div class="content">
+          <h4>Parse — JSON string to dict</h4>
+          <div class="tech">json.loads</div>
+          <p>The LLM returned a string. Convert it to a Python dict. If parsing fails, retry with the error message in the prompt — self-healing.</p>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="num-badge">5</div>
+        <div class="content">
+          <h4>Validate — dict to typed object</h4>
+          <div class="tech">Pydantic v2</div>
+          <p>Pass the dict to a Pydantic model. If any field is missing, malformed, or the wrong type, validation raises immediately. The output is now <em>provably</em> correct.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>The eight specialist agents</h3>
+
+    <p>Each card below shows: status, role, data source, output schema, and the talking point you'd use in an interview.</p>
+
+    <h4>Built &amp; working</h4>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-label">Agent 01 · ✓ Live</div>
+        <h3>Web Intelligence</h3>
+        <p><strong>Role:</strong> Extract a company's positioning, target market, and key features from their homepage.</p>
+        <p><strong>Source:</strong> Direct HTTP fetch of the company homepage.</p>
+        <p><strong>Output:</strong> <code>CompanyProfile</code> — value prop, target customer, 3-5 features, 3-5 keywords.</p>
+        <p><strong>Interview line:</strong> <em>"This agent answers 'who are they and what do they sell' from a single web request."</em></p>
+      </div>
+    </div>
+
+    <h4>Queued for next sprints</h4>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-label">Agent 02 · Day 5-6</div>
+        <h3>Hiring Signals</h3>
+        <p><strong>Role:</strong> Detect strategic intent through job postings. A company hiring 8 ML engineers signals priorities louder than any press release.</p>
+        <p><strong>Source:</strong> Greenhouse, Lever, Ashby public JSON APIs.</p>
+        <p><strong>Output:</strong> <code>HiringSnapshot</code> — total openings, breakdown by department/seniority/location, hot skills.</p>
+        <p><strong>Interview line:</strong> <em>"Hiring data is leading indicator; PR is lagging indicator. This agent reads the future."</em></p>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Agent 03 · Day 7-8</div>
+        <h3>Product Intelligence</h3>
+        <p><strong>Role:</strong> Track what a company has shipped recently. Build a feature timeline.</p>
+        <p><strong>Source:</strong> Public changelogs, RSS feeds, blog "What's New" pages, GitHub release notes.</p>
+        <p><strong>Output:</strong> <code>ProductTimeline</code> — list of releases with dates, themes, summaries.</p>
+        <p><strong>Interview line:</strong> <em>"Product velocity is competitive intelligence. Knowing what shipped and when reveals roadmap and bandwidth."</em></p>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Agent 04 · Day 9</div>
+        <h3>Pricing Intelligence</h3>
+        <p><strong>Role:</strong> Capture current pricing tiers and watch for changes over time.</p>
+        <p><strong>Source:</strong> Pricing page (often JS-heavy → Playwright fallback).</p>
+        <p><strong>Output:</strong> <code>PricingSnapshot</code> — tiers, prices, included features, change deltas vs last scrape.</p>
+        <p><strong>Interview line:</strong> <em>"Pricing changes are public but rarely announced. Tracking them historically is a real moat."</em></p>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Agent 05 · Day 10</div>
+        <h3>Sentiment &amp; Reviews</h3>
+        <p><strong>Role:</strong> Aggregate user opinions to surface common praise and complaints.</p>
+        <p><strong>Source:</strong> G2, Capterra, TrustRadius (public reviews, respect robots.txt).</p>
+        <p><strong>Output:</strong> <code>SentimentReport</code> — overall score, top 3 strengths, top 3 weaknesses, sample quotes.</p>
+        <p><strong>Interview line:</strong> <em>"Customer reviews are the only data source where competitors tell you their weaknesses publicly."</em></p>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Agent 06 · Day 11</div>
+        <h3>Funding &amp; News</h3>
+        <p><strong>Role:</strong> Recent funding rounds, acquisitions, leadership changes.</p>
+        <p><strong>Source:</strong> Crunchbase API (free tier), DuckDuckGo news search, RSS.</p>
+        <p><strong>Output:</strong> <code>CompanyMomentum</code> — last round size and date, recent news headlines, sentiment trend.</p>
+        <p><strong>Interview line:</strong> <em>"Momentum signals — funding, leadership, acquisitions — predict the next 12 months better than the product roadmap does."</em></p>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Agent 07 · Day 12</div>
+        <h3>Tech Stack Detection</h3>
+        <p><strong>Role:</strong> Infer the technologies a company runs on.</p>
+        <p><strong>Source:</strong> HTTP headers, Wappalyzer-style detection patterns, job postings (skill requirements).</p>
+        <p><strong>Output:</strong> <code>TechStack</code> — frontend, backend, infrastructure, data tools.</p>
+        <p><strong>Interview line:</strong> <em>"This is triangulation: 'they posted 8 Snowflake roles' is stronger evidence than scanning headers."</em></p>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Agent 08 · Day 13</div>
+        <h3>Social Listening</h3>
+        <p><strong>Role:</strong> Track mentions, tone, and volume across communities.</p>
+        <p><strong>Source:</strong> Hacker News API, Reddit (PRAW), public X/Twitter via Nitter.</p>
+        <p><strong>Output:</strong> <code>SocialPulse</code> — mention count, sentiment, top discussions.</p>
+        <p><strong>Interview line:</strong> <em>"Where Sentiment agent is professional reviews, Social agent is unfiltered. Both signals matter; they disagree often."</em></p>
+      </div>
+    </div>
+
+    <h3>The synthesizer — the agent <em>above</em> the agents</h3>
+
+    <div class="callout">
+      <span class="tag">Final Stage</span>
+      Once the eight specialists return their outputs, a <strong>Synthesizer agent</strong> reads them all, resolves contradictions ("hiring says expansion; reviews say layoffs"), and writes the final research brief. This agent's output IS the report the user sees in Slack.
+    </div>
+
+    <h3>How agents communicate — shared state</h3>
+
+    <p>Agents don't call each other directly. They read from and write to a typed shared state object (a <code>TypedDict</code> in LangGraph). The orchestrator passes this state through the graph; each agent enriches it.</p>
+
+<pre data-label="LangGraph state — conceptual"><span class="kw">class</span> ResearchState(TypedDict):
+    query: str
+    companies: list[str]
+    web_intel: dict[str, CompanyProfile]
+    hiring: dict[str, HiringSnapshot]
+    pricing: dict[str, PricingSnapshot]
+    sentiment: dict[str, SentimentReport]
+    momentum: dict[str, CompanyMomentum]
+    final_report: str | <span class="kw">None</span>
+</pre>
+
+    <p>This is what makes the system testable, debuggable, and extensible. A new agent just adds a new field to the state.</p>
+  </section>
+
+  <!-- ============================================================
+       OLD CYCLE TAB CONTINUES BELOW (unchanged)
        ============================================================ -->
   <section class="tab-panel" id="cycle">
     <div class="section-marker">§02 · Operational Flow</div>
@@ -1739,7 +2091,141 @@ app = FastAPI(title=<span class="str">"Recon API"</span>, version=<span class="s
   </section>
 
   <!-- ============================================================
-       TAB 08 · LEARNING PATH
+       TAB 10 · ERRORS & FIXES
+       ============================================================ -->
+  <section class="tab-panel" id="errors">
+    <div class="section-marker">§10 · Field Notes</div>
+    <h2>Real errors hit, real fixes <em>applied</em></h2>
+
+    <p class="intro">
+      A log of every problem encountered while building Recon, what caused it, how it was solved, and what to say about it in interviews. These are not hypothetical — they actually happened.
+    </p>
+
+    <h3>Error 01 · ModuleNotFoundError: No module named 'src'</h3>
+
+    <div class="card">
+      <div class="card-label">When · Day 2 · First agent run</div>
+      <h3>The symptom</h3>
+      <pre data-label="terminal output">Traceback (most recent call last):
+  File "scripts/run_web_intel.py", line 20, in &lt;module&gt;
+    from src.agents.web_intel import analyze_company
+ModuleNotFoundError: No module named 'src'</pre>
+
+      <h3>The cause</h3>
+      <p>Running <code>python scripts/run_web_intel.py</code> tells Python that <code>scripts/</code> is the root of imports. From there, <code>src/</code> looks like a sibling folder, not an importable package, so the import fails.</p>
+
+      <h3>The fix</h3>
+<pre data-label="powershell"><span class="cmt"># ❌ This fails — Python can't see src/</span>
+python scripts/run_web_intel.py https://linear.app Linear
+
+<span class="cmt"># ✅ This works — -m makes Python treat the project root as the package root</span>
+python -m scripts.run_web_intel https://linear.app Linear</pre>
+
+      <h3>Going forward</h3>
+      <p>Always use <code>python -m scripts.&lt;name&gt; ...</code> — no <code>.py</code> extension, dots instead of slashes. This is also the standard way to run pytest, uvicorn, and most professional Python tools.</p>
+
+      <h3>Interview answer</h3>
+      <div class="callout">
+        <span class="tag">If asked about Python imports</span>
+        "Python's import system uses the location of the entry-point script as the root. <code>python file.py</code> sets that root to the file's directory; <code>python -m package.module</code> sets it to the project root. For multi-package projects, you always want the latter — otherwise relative imports break."
+      </div>
+    </div>
+
+    <h3>Error 02 · GH013: Repository rule violations · GitHub Push Protection</h3>
+
+    <div class="card">
+      <div class="card-label">When · Day 2 · First push of agent code</div>
+      <h3>The symptom</h3>
+      <pre data-label="git push output">remote: error: GH013: Repository rule violations found for refs/heads/main.
+remote: - GITHUB PUSH PROTECTION
+remote:   - Push cannot contain secrets
+remote:   --- Groq API Key ---------------------------------
+remote:     locations:
+remote:       - commit: a8866f51c0f1b23c7e10159ea537e8fb46946f35
+remote:         path: .env:1
+! [remote rejected] main -&gt; main (push declined due to repository rule violations)</pre>
+
+      <h3>The cause</h3>
+      <p>The <code>.env</code> file containing the real Groq API key was accidentally committed and pushed. GitHub's secret scanning detected the key and refused the push. <strong>This is GitHub doing you a favor</strong> — without this protection, the key would have been public.</p>
+
+      <h3>The fix</h3>
+<pre data-label="powershell"><span class="cmt"># 1. Untrack .env (keeps the local file)</span>
+git rm --cached .env
+
+<span class="cmt"># 2. Amend the commit to remove .env from history</span>
+git commit --amend --no-edit
+
+<span class="cmt"># 3. Force push the rewritten commit</span>
+git push --force</pre>
+
+      <h3>Critical follow-up</h3>
+      <p>Even though the key never reached GitHub publicly, it was in your local Git history. <mark>Rotate the key anyway.</mark> Go to console.groq.com → API Keys → delete the old one → create a new one → update <code>.env</code>. Treat any key that appeared in any commit as compromised.</p>
+
+      <h3>Prevention going forward</h3>
+      <ul class="check">
+        <li>Verify <code>.gitignore</code> contains <code>.env</code> before <em>any</em> <code>git add</code></li>
+        <li>Run <code>git status</code> before every commit and scan for sensitive files</li>
+        <li>Consider installing <code>git-secrets</code> as a pre-commit hook for an extra safety net</li>
+      </ul>
+
+      <h3>Interview answer</h3>
+      <div class="callout">
+        <span class="tag">If asked about secret management</span>
+        "I treat the <code>.gitignore</code> as a security boundary, not a convenience. I had a near-miss early in this project where a <code>.env</code> file got committed; GitHub's secret scanning caught it before it went public, I amended the commit, and rotated the key. The lesson stuck — I now scan <code>git status</code> before every commit and never treat <code>.env</code> as anything but radioactive."
+      </div>
+    </div>
+
+    <h3>Error 03 · __pycache__ folders cluttering Git</h3>
+
+    <div class="card">
+      <div class="card-label">When · Day 2 · After running scripts</div>
+      <h3>The symptom</h3>
+      <p>After running scripts, Git started tracking <code>.pyc</code> files inside <code>__pycache__/</code> folders:</p>
+      <pre data-label="git status">create mode 100644 src/__pycache__/__init__.cpython-314.pyc
+create mode 100644 src/__pycache__/config.cpython-314.pyc
+create mode 100644 src/agents/__pycache__/web_intel.cpython-314.pyc</pre>
+
+      <h3>The cause</h3>
+      <p>Python compiles <code>.py</code> files into <code>.pyc</code> bytecode at runtime, storing them in <code>__pycache__/</code> folders. These are auto-generated, machine-specific, and should never be committed. Either <code>.gitignore</code> didn't list them, or they were accidentally tracked before the rule was added.</p>
+
+      <h3>The fix</h3>
+<pre data-label="powershell"><span class="cmt"># Add to .gitignore (if not already there):</span>
+<span class="cmt"># __pycache__/</span>
+<span class="cmt"># *.py[cod]</span>
+<span class="cmt"># *.pyc</span>
+
+<span class="cmt"># Untrack already-committed pycache folders</span>
+git rm -r --cached src/__pycache__ src/agents/__pycache__ scripts/__pycache__
+
+git commit -m <span class="str">"chore: remove python cache files"</span>
+git push</pre>
+
+      <h3>Why this matters</h3>
+      <p>Beyond clutter, committed <code>.pyc</code> files can cause subtle bugs across machines (different Python versions produce different bytecode). Keeping them out of Git is a hard rule in every Python project.</p>
+
+      <h3>Interview answer</h3>
+      <div class="callout">
+        <span class="tag">If asked about .gitignore best practices</span>
+        "I keep three categories out of Git: secrets (<code>.env</code>, keys), build artifacts (<code>__pycache__</code>, <code>dist/</code>), and IDE config (<code>.vscode/</code>). The <code>.gitignore</code> goes in the very first commit, before any other code. If I miss something and it gets committed, <code>git rm --cached</code> removes it from tracking without deleting the local file."
+      </div>
+    </div>
+
+    <h3>The general debugging mindset</h3>
+
+    <p>Across all three errors, notice the pattern:</p>
+
+    <ol class="numbered">
+      <li><strong>Read the error message carefully.</strong> Each one literally told you the problem.</li>
+      <li><strong>Understand the cause, not just the fix.</strong> Why did Python lose <code>src</code>? Why did GitHub block the push?</li>
+      <li><strong>Apply the fix.</strong> Often a single command.</li>
+      <li><strong>Prevent recurrence.</strong> Update <code>.gitignore</code>, change your default command, document the lesson.</li>
+    </ol>
+
+    <p>Engineers aren't people who don't make mistakes — they're people who recover well from them and don't repeat them.</p>
+  </section>
+
+  <!-- ============================================================
+       OLD LEARNING PATH TAB UNCHANGED BELOW
        ============================================================ -->
   <section class="tab-panel" id="learn">
     <div class="section-marker">§08 · Curriculum</div>
