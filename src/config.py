@@ -18,10 +18,12 @@ class Settings(BaseSettings):
     groq_model: str = Field(default="llama-3.3-70b-versatile")
 
     # --- Vector Store ---
+    vector_store: str = "pinecone"  # or "qdrant"
     pinecone_api_key: str
     pinecone_index_name: str = "recon-v1"
     pinecone_cloud: str = "aws"
     pinecone_region: str = "us-east-1"
+    
 
     # --- App ---
     app_env: str = "development"
