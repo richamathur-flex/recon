@@ -1,0 +1,76 @@
+{
+  "linear": {
+    "company_name": "Linear",
+    "value_proposition": "Linear is a product development system for teams and agents, purpose-built for planning and building products in the AI era.",
+    "target_customer": "Modern teams with AI workflows",
+    "key_features": [
+      "Issue tracking and management",
+      "AI-powered agents for workflow automation",
+      "Project planning and navigation",
+      "Code review and collaboration tools",
+      "Analytics and dashboards for progress tracking"
+    ],
+    "positioning_keywords": ["Product development", "AI era", "Modern teams", "Workflow automation", "Issue tracking"],
+    "source_url": "https://linear.app"
+  },
+  "notion": {
+    "company_name": "Notion",
+    "value_proposition": "Notion provides a single platform where teams can do all their work, streamlining workflows and reducing timelines by 3x with the help of AI-powered agents.",
+    "target_customer": "Teams and enterprises, including Fortune 100 and YC companies",
+    "key_features": [
+      "Custom Agents to automate repetitive work",
+      "AI-powered tools such as Q&A agents, task routing agents, and reporting agents",
+      "All-in-one workspace with features like docs, knowledge base, and project management"
+    ],
+    "positioning_keywords": ["AI", "Automation", "Productivity", "Workflow Streamlining", "All-in-one Workspace"],
+    "source_url": "https://www.notion.so"
+  },
+  "supabase": {
+    "company_name": "Supabase",
+    "value_proposition": "Supabase is the Postgres development platform that allows you to build, scale, and manage your projects with ease.",
+    "target_customer": "Fast-growing companies and startups, as well as solo founders and developers",
+    "key_features": [
+      "Postgres Database with built-in Auth and Row Level Security",
+      "Edge Functions for custom code without deploying or scaling servers",
+      "Realtime subscriptions for multiplayer experiences and real-time data synchronization"
+    ],
+    "positioning_keywords": ["Postgres development platform", "Backend-as-a-Service", "Serverless", "Realtime"],
+    "source_url": "https://supabase.com"
+  },
+  "airtable": {
+    "company_name": "Airtable",
+    "value_proposition": "Airtable helps teams build AI-powered workflows that unify data, maximize collaboration, and set them up for long-term success without requiring code.",
+    "target_customer": "Forward-thinking organizations and teams",
+    "key_features": [
+      "No-code components for building AI-powered workflows",
+      "Scalable infrastructure with HyperDB and support for tens of thousands of users",
+      "Flexible administration with admin roles, robust permissions, and fine-grained RBAC"
+    ],
+    "positioning_keywords": ["AI-powered workflows", "No-code", "Collaboration", "Scalable infrastructure", "Enterprise-grade applications"],
+    "source_url": "https://airtable.com"
+  },
+  "vercel": {
+    "company_name": "Vercel",
+    "value_proposition": "Vercel provides the developer tools and cloud infrastructure to build, scale, and secure a faster, more personalized web.",
+    "target_customer": "Developers and enterprises",
+    "key_features": [
+      "AI Cloud infrastructure for building and deploying web applications",
+      "Fast load times and zero overhead with optimized infrastructure and CDN",
+      "Streamline content creation and publishing with built-in previews"
+    ],
+    "positioning_keywords": ["AI Cloud", "Developer Tools", "Cloud Infrastructure", "Personalized Web", "Fast Deployment"],
+    "source_url": "https://vercel.com"
+  },
+  "figma": {
+    "company_name": "Figma",
+    "value_proposition": "Figma is a collaborative design platform for designers and developers.",
+    "target_customer": "Designers and developers",
+    "key_features": [
+      "Collaborative design and development tools",
+      "AI-powered design and coding capabilities",
+      "Design systems and reusable components"
+    ],
+    "positioning_keywords": ["Design", "Collaboration", "AI"],
+    "source_url": "https://figma.com"
+  }
+}
