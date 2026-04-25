@@ -1,0 +1,1909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RECON — Autonomous Research Agent / Project Dossier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+<style>
+/* =============================================================
+   RECON — Intelligence Dossier Aesthetic
+   Editorial serif meets technical terminal.
+   ============================================================= */
+
+:root {
+  --paper: #F2EDE0;
+  --paper-dark: #E8E1D0;
+  --ink: #0F1410;
+  --ink-soft: #2A312C;
+  --ink-muted: #6B6458;
+  --signal: #C0391B;        /* burnt red — classified stamp */
+  --signal-deep: #8B2814;
+  --accent: #1E4D3A;        /* deep archive green */
+  --rule: #BFB59F;
+  --highlight: #F0E4A8;     /* aged highlighter */
+
+  --serif-display: "Fraunces", Georgia, serif;
+  --serif-body: "Lora", Georgia, serif;
+  --mono: "JetBrains Mono", "Courier New", monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif-body);
+  font-size: 17px;
+  line-height: 1.65;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Paper grain texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(139, 40, 20, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(30, 77, 58, 0.03) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.06 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: multiply;
+}
+
+.container {
+  position: relative;
+  z-index: 10;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+/* =============================================================
+   HEADER — Classified dossier header
+   ============================================================= */
+header {
+  padding: 32px 0 24px;
+  border-bottom: 2px solid var(--ink);
+  position: relative;
+}
+
+.classified-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 24px;
+}
+
+.classified-strip .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--signal);
+  border-radius: 50%;
+  margin-right: 8px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.masthead {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 32px;
+  padding: 16px 0;
+}
+
+.title-block h1 {
+  font-family: var(--serif-display);
+  font-size: clamp(72px, 12vw, 160px);
+  font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 1;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+
+.title-block h1 em {
+  font-style: italic;
+  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+  color: var(--signal);
+}
+
+.subtitle {
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--ink-soft);
+  margin-top: 12px;
+  max-width: 520px;
+}
+
+.meta-stamp {
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.8;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--ink-muted);
+}
+
+.meta-stamp .stamp {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 6px 12px;
+  border: 1.5px solid var(--signal);
+  color: var(--signal);
+  font-weight: 700;
+  transform: rotate(-2deg);
+  font-size: 10px;
+}
+
+/* =============================================================
+   HERO SUMMARY
+   ============================================================= */
+.hero {
+  padding: 56px 0;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 64px;
+}
+
+.hero .lead {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: clamp(22px, 2.5vw, 30px);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.hero .lead .drop {
+  font-family: var(--serif-display);
+  font-size: 5.5em;
+  font-weight: 600;
+  font-variation-settings: "opsz" 144, "WONK" 1;
+  float: left;
+  line-height: 0.85;
+  margin-right: 16px;
+  margin-top: 8px;
+  color: var(--signal);
+}
+
+.hero-sidebar {
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.9;
+  letter-spacing: 0.05em;
+  border-left: 2px solid var(--ink);
+  padding-left: 20px;
+  color: var(--ink-soft);
+}
+
+.hero-sidebar strong {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--signal);
+  margin-bottom: 4px;
+  font-size: 10px;
+}
+
+.hero-sidebar .field {
+  margin-bottom: 16px;
+}
+
+/* =============================================================
+   TABS
+   ============================================================= */
+.tabs-nav {
+  position: sticky;
+  top: 0;
+  background: var(--paper);
+  z-index: 20;
+  border-bottom: 2px solid var(--ink);
+  margin: 0 -48px;
+  padding: 0 48px;
+}
+
+.tabs-nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--paper);
+  z-index: -1;
+}
+
+.tabs-list {
+  display: flex;
+  gap: 2px;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tabs-list::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  background: transparent;
+  border: none;
+  padding: 20px 24px;
+  cursor: pointer;
+  color: var(--ink-muted);
+  border-bottom: 3px solid transparent;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  position: relative;
+}
+
+.tab-btn:hover {
+  color: var(--ink);
+}
+
+.tab-btn.active {
+  color: var(--ink);
+  border-bottom-color: var(--signal);
+}
+
+.tab-btn .num {
+  color: var(--signal);
+  margin-right: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* =============================================================
+   TAB CONTENT
+   ============================================================= */
+.tab-panel {
+  display: none;
+  padding: 56px 0 96px;
+  animation: fadeIn 0.4s ease;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-marker {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-marker::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+h2 {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-variation-settings: "opsz" 72, "WONK" 1;
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 32px;
+  color: var(--ink);
+}
+
+h2 em {
+  font-style: italic;
+  color: var(--signal);
+  font-variation-settings: "opsz" 72, "SOFT" 100, "WONK" 1;
+}
+
+h3 {
+  font-family: var(--serif-display);
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 40px 0 16px;
+  color: var(--ink);
+}
+
+h4 {
+  font-family: var(--mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: 600;
+  color: var(--ink-muted);
+  margin: 24px 0 12px;
+}
+
+p {
+  margin-bottom: 18px;
+  color: var(--ink-soft);
+  max-width: 70ch;
+}
+
+p.intro {
+  font-family: var(--serif-display);
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--ink);
+  font-weight: 300;
+  max-width: 65ch;
+  margin-bottom: 32px;
+}
+
+strong { color: var(--ink); font-weight: 600; }
+em { color: var(--signal-deep); }
+
+mark {
+  background: var(--highlight);
+  color: var(--ink);
+  padding: 0 4px;
+  font-style: italic;
+}
+
+/* =============================================================
+   TWO-COL GRIDS
+   ============================================================= */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin: 32px 0;
+}
+
+.three-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin: 32px 0;
+}
+
+/* =============================================================
+   CARDS
+   ============================================================= */
+.card {
+  background: var(--paper-dark);
+  border: 1px solid var(--rule);
+  padding: 28px;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.card-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin-bottom: 8px;
+}
+
+.card h3 {
+  margin-top: 0;
+  font-size: 22px;
+}
+
+.card p {
+  font-size: 15px;
+  margin-bottom: 0;
+}
+
+/* =============================================================
+   PIPELINE / FLOW DIAGRAM
+   ============================================================= */
+.pipeline {
+  margin: 40px 0;
+  background: var(--paper-dark);
+  border: 2px solid var(--ink);
+  padding: 32px;
+  position: relative;
+}
+
+.pipeline-step {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 24px;
+  padding: 20px 0;
+  border-bottom: 1px dashed var(--rule);
+  align-items: start;
+}
+
+.pipeline-step:last-child { border-bottom: none; }
+
+.pipeline-step .num-badge {
+  font-family: var(--serif-display);
+  font-size: 48px;
+  font-weight: 600;
+  font-variation-settings: "WONK" 1;
+  line-height: 1;
+  color: var(--signal);
+}
+
+.pipeline-step .content h4 {
+  font-family: var(--serif-display);
+  font-size: 20px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink);
+  margin: 0 0 4px;
+}
+
+.pipeline-step .content .tech {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.pipeline-step .content p {
+  margin: 0;
+  font-size: 15px;
+}
+
+/* =============================================================
+   TABLE
+   ============================================================= */
+.stack-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 15px;
+}
+
+.stack-table th {
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--signal);
+  padding: 12px 16px;
+  border-bottom: 2px solid var(--ink);
+  font-weight: 600;
+}
+
+.stack-table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+  color: var(--ink-soft);
+}
+
+.stack-table tr:hover td { background: var(--paper-dark); }
+
+.stack-table td:first-child {
+  font-family: var(--serif-display);
+  font-weight: 500;
+  color: var(--ink);
+  width: 22%;
+}
+
+.stack-table td:nth-child(2) {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--accent);
+  width: 22%;
+}
+
+/* =============================================================
+   CODE BLOCK
+   ============================================================= */
+pre {
+  background: var(--ink);
+  color: #E8E1D0;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.7;
+  padding: 24px 28px;
+  overflow-x: auto;
+  margin: 20px 0;
+  border-left: 4px solid var(--signal);
+  position: relative;
+}
+
+pre::before {
+  content: attr(data-label);
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--signal);
+  text-transform: uppercase;
+}
+
+pre .cmt { color: #8B9A8F; font-style: italic; }
+pre .kw { color: #E8A87C; }
+pre .str { color: #A8C69F; }
+pre .num { color: #D4A574; }
+pre code { font-family: inherit; }
+
+code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--paper-dark);
+  padding: 2px 6px;
+  border-radius: 2px;
+  color: var(--signal-deep);
+  border: 1px solid var(--rule);
+}
+
+/* =============================================================
+   LISTS
+   ============================================================= */
+ul, ol { margin: 16px 0 24px 24px; }
+
+ul li, ol li {
+  margin-bottom: 10px;
+  color: var(--ink-soft);
+  padding-left: 8px;
+}
+
+ul.check {
+  list-style: none;
+  margin-left: 0;
+}
+
+ul.check li {
+  padding-left: 28px;
+  position: relative;
+  margin-bottom: 12px;
+}
+
+ul.check li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--signal);
+  font-weight: 700;
+  font-family: var(--mono);
+}
+
+ol.numbered {
+  counter-reset: step;
+  list-style: none;
+  margin-left: 0;
+}
+
+ol.numbered > li {
+  counter-increment: step;
+  padding-left: 48px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+ol.numbered > li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: -2px;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--signal);
+  background: var(--paper-dark);
+  padding: 2px 8px;
+  border: 1px solid var(--signal);
+}
+
+/* =============================================================
+   CALLOUT
+   ============================================================= */
+.callout {
+  background: var(--paper-dark);
+  border-left: 4px solid var(--signal);
+  padding: 20px 24px;
+  margin: 28px 0;
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.callout .tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+/* =============================================================
+   RESOURCE LINKS
+   ============================================================= */
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin: 32px 0;
+}
+
+.resource-card {
+  display: block;
+  padding: 24px;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  text-decoration: none;
+  color: var(--ink);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.resource-card::after {
+  content: '→';
+  position: absolute;
+  right: 20px;
+  top: 24px;
+  font-size: 20px;
+  color: var(--signal);
+  transition: transform 0.2s ease;
+}
+
+.resource-card:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.resource-card:hover::after {
+  transform: translateX(4px);
+  color: var(--paper);
+}
+
+.resource-card:hover .resource-meta { color: var(--paper-dark); }
+.resource-card:hover .resource-desc { color: var(--paper-dark); }
+
+.resource-meta {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin-bottom: 6px;
+}
+
+.resource-card h4 {
+  font-family: var(--serif-display);
+  font-size: 20px;
+  color: inherit;
+  margin: 0 0 8px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+.resource-desc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* =============================================================
+   ASCII DIAGRAM
+   ============================================================= */
+.ascii-diagram {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.5;
+  padding: 28px;
+  overflow-x: auto;
+  margin: 32px 0;
+  border: 2px solid var(--ink);
+  white-space: pre;
+}
+
+/* =============================================================
+   FOOTER
+   ============================================================= */
+footer {
+  border-top: 2px solid var(--ink);
+  padding: 48px 0 32px;
+  margin-top: 64px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+.footer-grid strong {
+  display: block;
+  color: var(--signal);
+  margin-bottom: 8px;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--rule);
+  padding-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+}
+
+/* =============================================================
+   RESPONSIVE
+   ============================================================= */
+@media (max-width: 900px) {
+  .container { padding: 0 24px; }
+  .tabs-nav { margin: 0 -24px; padding: 0 24px; }
+  .masthead { grid-template-columns: 1fr; }
+  .meta-stamp { text-align: left; }
+  .hero { grid-template-columns: 1fr; gap: 32px; }
+  .two-col, .three-col { grid-template-columns: 1fr; gap: 24px; }
+  .tab-btn { padding: 16px; font-size: 11px; }
+  .pipeline-step { grid-template-columns: 40px 1fr; gap: 16px; }
+  .pipeline-step .num-badge { font-size: 36px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header>
+    <div class="classified-strip">
+      <span><span class="dot"></span>LIVE DOCUMENT · AUTHORIZED PERSONNEL</span>
+      <span>DOSSIER No. RCN-001</span>
+      <span>REV 2026.04</span>
+    </div>
+
+    <div class="masthead">
+      <div class="title-block">
+        <h1>Rec<em>o</em>n.</h1>
+        <p class="subtitle">An autonomous research agent that reads the internet so you don't have to. Competitive intelligence &amp; equity research, orchestrated by LLM agents over hybrid retrieval.</p>
+      </div>
+      <div class="meta-stamp">
+        <div>Author · R. Mathur</div>
+        <div>Stack · Python · LangGraph</div>
+        <div>Deploy · Fly + Render</div>
+        <div><span class="stamp">Portfolio Build</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section class="hero">
+    <div>
+      <p class="lead">
+        <span class="drop">R</span>econ is a portfolio-grade AI system that behaves like a junior research analyst. Send it a natural-language question through Slack — <em>"Teardown Linear vs Jira"</em> — and it autonomously fetches data from websites, job boards, review sites, and SEC filings, searches through the corpus with hybrid RAG, and returns a structured research brief in under a minute. This dossier documents every moving part: the orchestration, the agents, the data, and the infrastructure.
+      </p>
+    </div>
+
+    <aside class="hero-sidebar">
+      <div class="field">
+        <strong>STATUS</strong>
+        Active development
+      </div>
+      <div class="field">
+        <strong>SCOPE</strong>
+        2 verticals · 8 agents · 3 interfaces
+      </div>
+      <div class="field">
+        <strong>BUDGET</strong>
+        $0/month (free tiers only)
+      </div>
+      <div class="field">
+        <strong>ORIGIN</strong>
+        Inspired by Cacheux/Rag-Equity-Research-Agent, rebuilt for platform pluggability
+      </div>
+      <div class="field">
+        <strong>LEARNING TARGETS</strong>
+        LangChain · LangGraph · RAG · Python · Git · FastAPI · Slack API · Docker
+      </div>
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       TABS NAV
+       ============================================================ -->
+  <nav class="tabs-nav">
+    <ul class="tabs-list" role="tablist">
+      <li><button class="tab-btn active" data-tab="overview"><span class="num">01</span>Overview</button></li>
+      <li><button class="tab-btn" data-tab="cycle"><span class="num">02</span>End-to-End Cycle</button></li>
+      <li><button class="tab-btn" data-tab="stack"><span class="num">03</span>Tech Stack</button></li>
+      <li><button class="tab-btn" data-tab="setup"><span class="num">04</span>Setup</button></li>
+      <li><button class="tab-btn" data-tab="git"><span class="num">05</span>Git</button></li>
+      <li><button class="tab-btn" data-tab="python"><span class="num">06</span>Python</button></li>
+      <li><button class="tab-btn" data-tab="api"><span class="num">07</span>APIs</button></li>
+      <li><button class="tab-btn" data-tab="learn"><span class="num">08</span>Learning Path</button></li>
+    </ul>
+  </nav>
+
+  <!-- ============================================================
+       TAB 01 · OVERVIEW
+       ============================================================ -->
+  <section class="tab-panel active" id="overview">
+    <div class="section-marker">§01 · Briefing</div>
+    <h2>What <em>is</em> this, and why build it?</h2>
+
+    <p class="intro">
+      Equity research and competitive intelligence are high-leverage but profoundly boring workflows. An analyst spends hours stitching together prices, filings, reviews, and news into a single summary — work that is pattern-heavy, data-aggregating, and summarization-dominant. Three tasks LLMs happen to be excellent at.
+    </p>
+
+    <div class="two-col">
+      <div>
+        <h3>The Scope</h3>
+        <p>Recon is a <strong>research agent platform</strong>. It is not one application — it is a domain-agnostic orchestration layer onto which <strong>verticals</strong> plug in. A vertical is a bundle of agents, data sources, and prompts tuned to a specific research domain.</p>
+
+        <ul class="check">
+          <li><strong>Vertical 1 — Competitive Intelligence.</strong> The flagship. Teardowns, tracking, market briefs across 8 data sources (websites, jobs, reviews, funding, etc.).</li>
+          <li><strong>Vertical 2 — Equity Research.</strong> Secondary vertical. SEC 10-K analysis, real-time quotes, Reddit sentiment. Proof that the platform generalizes.</li>
+          <li><strong>Interfaces.</strong> Slack bot (primary), FastAPI REST (secondary), CLI (developer).</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>The Purpose</h3>
+        <p>Two layers of purpose:</p>
+
+        <h4>Product layer</h4>
+        <p>Turn a natural-language research question into a structured, source-cited brief, delivered to Slack in under 60 seconds.</p>
+
+        <h4>Portfolio layer</h4>
+        <p>Demonstrate — to interviewers, hiring managers, and future collaborators — competence across the full modern AI engineering stack: LLM orchestration, hybrid retrieval, agent design, system architecture, and deployment.</p>
+
+        <div class="callout">
+          <span class="tag">North Star</span>
+          Build something a stranger finds genuinely useful, not just impressive.
+        </div>
+      </div>
+    </div>
+
+    <h3>Why <em>this</em> project beats a generic RAG clone</h3>
+
+    <div class="three-col">
+      <div class="card">
+        <div class="card-label">Differentiator 01</div>
+        <h3>Pluggable verticals</h3>
+        <p>Most tutorial projects hardcode one domain. Recon treats the domain as configuration — new research domains can be added without touching orchestration.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Differentiator 02</div>
+        <h3>Hybrid retrieval</h3>
+        <p>Not just dense embeddings. Combined BM25 + dense + reciprocal rank fusion, with metadata-filtered queries per company and per time window.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Differentiator 03</div>
+        <h3>Evaluation built-in</h3>
+        <p>RAGAS metrics, a custom eval set, and regression tests in CI. Most portfolios skip this. Ours reports retrieval precision and faithfulness.</p>
+      </div>
+    </div>
+
+    <h3>Who benefits from Recon</h3>
+    <ul>
+      <li><strong>Product managers</strong> who need weekly competitive briefs</li>
+      <li><strong>Founders</strong> researching a market before entry</li>
+      <li><strong>Sales engineers</strong> prepping for competitive deals</li>
+      <li><strong>Investors</strong> doing fast company diligence (equity vertical)</li>
+      <li><strong>You</strong>, learning how to build production AI systems end-to-end</li>
+    </ul>
+  </section>
+
+  <!-- ============================================================
+       TAB 02 · END-TO-END CYCLE
+       ============================================================ -->
+  <section class="tab-panel" id="cycle">
+    <div class="section-marker">§02 · Operational Flow</div>
+    <h2>How a query <em>moves</em> through the system</h2>
+
+    <p class="intro">Trace one request — <code>@recon teardown Linear vs Jira</code> — from the moment you hit enter in Slack to the moment the brief appears in your channel.</p>
+
+    <div class="ascii-diagram">
+     ┌───────────────┐       ┌───────────────┐       ┌───────────────┐
+     │  USER INPUT   │──────▶│  SLACK BOT    │──────▶│   LANGGRAPH   │
+     │   (Slack)     │       │  (Bolt SDK)   │       │  ORCHESTRATOR │
+     └───────────────┘       └───────────────┘       └───────┬───────┘
+                                                             │
+                                             ┌───────────────▼───────────────┐
+                                             │  STEP 1  PARSE & PLAN        │
+                                             │  Extract companies, intent    │
+                                             │  Decide which agents to run   │
+                                             └───────────────┬───────────────┘
+                                                             │
+                     ┌───────────────┬───────────────┬───────┴───────┬───────────────┐
+                     ▼               ▼               ▼               ▼               ▼
+              ┌───────────┐   ┌───────────┐   ┌───────────┐   ┌───────────┐   ┌───────────┐
+              │ Web Intel │   │  Hiring   │   │  Product  │   │  Pricing  │   │ Sentiment │
+              │   Agent   │   │  Agent    │   │   Agent   │   │   Agent   │   │   Agent   │
+              └─────┬─────┘   └─────┬─────┘   └─────┬─────┘   └─────┬─────┘   └─────┬─────┘
+                    │               │               │               │               │
+                    └───────────────┴───────┬───────┴───────────────┴───────────────┘
+                                            ▼
+                                  ┌───────────────────┐      ┌──────────────────┐
+                                  │   RAG PIPELINE    │◀────▶│   PINECONE DB    │
+                                  │ BM25 + Dense +RRF │      │  (vector store)  │
+                                  └─────────┬─────────┘      └──────────────────┘
+                                            │
+                                            ▼
+                                  ┌───────────────────┐      ┌──────────────────┐
+                                  │   SYNTHESIZER     │◀────▶│   GROQ LLM API   │
+                                  │   (generates      │      │  Llama 3.3 70B   │
+                                  │    final brief)   │      └──────────────────┘
+                                  └─────────┬─────────┘
+                                            │
+                                            ▼
+                                  ┌───────────────────┐
+                                  │  SLACK RESPONSE   │
+                                  │ (threaded reply)  │
+                                  └───────────────────┘
+    </div>
+
+    <h3>The eight-step lifecycle</h3>
+
+    <div class="pipeline">
+      <div class="pipeline-step">
+        <div class="num-badge">1</div>
+        <div class="content">
+          <h4>Input reception</h4>
+          <div class="tech">Slack Bolt SDK · Socket Mode</div>
+          <p>User sends <code>@recon teardown Linear vs Jira</code> in Slack. The Bolt app receives the event over a WebSocket (Socket Mode), authenticates the workspace, and dispatches to the command handler.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">2</div>
+        <div class="content">
+          <h4>Query parsing</h4>
+          <div class="tech">LangGraph node · Groq Llama 3.3 70B</div>
+          <p>The first graph node uses the LLM in JSON mode to extract structured intent: <code>{ "intent": "teardown", "companies": ["Linear", "Jira"], "focus": ["product", "pricing", "momentum"] }</code>. Typed state flows through the rest of the graph.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">3</div>
+        <div class="content">
+          <h4>Strategy planning</h4>
+          <div class="tech">LangGraph conditional edges</div>
+          <p>A planner node decides which specialist agents should fire. For a teardown, it fans out to all 5 agents. For a pricing-only query, only the Pricing agent runs. This is cost and latency optimization, not hardcoded logic.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">4</div>
+        <div class="content">
+          <h4>Parallel data collection</h4>
+          <div class="tech">asyncio.gather · httpx · Playwright</div>
+          <p>Agents run concurrently. Web Intel fetches homepages, Hiring scrapes job boards, Sentiment queries G2 reviews. Each agent writes its findings (both raw text and structured data) back into shared state.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">5</div>
+        <div class="content">
+          <h4>Corpus indexing</h4>
+          <div class="tech">Nomic Embed v1.5 · Pinecone</div>
+          <p>New documents are chunked (semantic splitting), embedded with a local Nomic model, and upserted to Pinecone with metadata <code>{company, source, scraped_at}</code>. This happens in the background; queries can filter by company.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">6</div>
+        <div class="content">
+          <h4>Hybrid retrieval</h4>
+          <div class="tech">BM25 + dense + Reciprocal Rank Fusion</div>
+          <p>For questions requiring context, Recon runs both sparse (BM25 for exact terms like pricing tiers, product names) and dense (semantic) retrieval over the corpus, then merges the ranked lists via RRF. The fused top-K goes into the synthesizer prompt.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">7</div>
+        <div class="content">
+          <h4>Synthesis</h4>
+          <div class="tech">Groq · Pydantic structured output</div>
+          <p>The synthesizer node receives all agent outputs and retrieved context, prompts the LLM to generate a structured report following a Pydantic schema (executive summary, per-company deep-dive, comparison table, action items). Structured output means no markdown parsing fragility.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">8</div>
+        <div class="content">
+          <h4>Delivery</h4>
+          <div class="tech">Slack Block Kit · Thread reply</div>
+          <p>The Python-side formatter converts the Pydantic report into Slack Block Kit JSON. Response posts as a threaded reply so the channel stays clean. Interactive buttons (<em>"Track this"</em>, <em>"Re-run in 7 days"</em>) are attached for follow-up workflows.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="tag">Interview Gold</span>
+      The <strong>Strategy Planner</strong> (step 3) is the single most interview-worthy architectural detail. It's how you answer the question <em>"why not just use a ReAct agent?"</em> — because a ReAct agent can't plan parallel execution; a graph can.
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TAB 03 · TECH STACK
+       ============================================================ -->
+  <section class="tab-panel" id="stack">
+    <div class="section-marker">§03 · Manifest</div>
+    <h2>Every component, and <em>why</em> it's here</h2>
+
+    <p class="intro">Each tool earned its place by solving a specific problem better than the alternatives — and by being free-tier-viable. Total monthly cost: <mark>$0</mark>.</p>
+
+    <h3>Orchestration &amp; Language Models</h3>
+    <table class="stack-table">
+      <thead>
+        <tr><th>Component</th><th>Library</th><th>Role</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>LLM Provider</td><td>Groq (Llama 3.3 70B)</td><td>Primary inference. Sub-second latency, free tier, no credit card. Llama 3.3 70B is close to GPT-4-class quality for this workload.</td></tr>
+        <tr><td>Orchestration</td><td>LangGraph</td><td>State machine for the agent workflow. Chose over vanilla LangChain because explicit graphs are debuggable and support true parallel execution.</td></tr>
+        <tr><td>LLM Framework</td><td>LangChain</td><td>Used for the base <code>Runnable</code> abstraction and output parsers. Kept lightweight — we don't use LangChain agents.</td></tr>
+        <tr><td>Structured Output</td><td>Pydantic v2</td><td>Enforces that LLM outputs match our schema. No brittle JSON parsing. Pydantic validation failures trigger retries with error feedback to the model.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Retrieval &amp; Storage</h3>
+    <table class="stack-table">
+      <thead>
+        <tr><th>Component</th><th>Library</th><th>Role</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Vector Database</td><td>Pinecone (serverless)</td><td>Primary vector store. Free tier: 2GB, 100K vectors, 1 index — enough for ~50 indexed companies. Managed, so zero ops.</td></tr>
+        <tr><td>Vector DB (alt)</td><td>Qdrant (Docker)</td><td>Secondary backend behind the <code>VectorStore</code> protocol. Runs locally for dev/offline work. Demonstrates the abstraction layer.</td></tr>
+        <tr><td>Embeddings</td><td>Nomic Embed Text v1.5</td><td>Open-source, 768-dim, runs locally via sentence-transformers. No API key, no cost, excellent retrieval quality on English text.</td></tr>
+        <tr><td>Sparse Index</td><td>rank-bm25</td><td>BM25 scoring for keyword-heavy financial and product terminology. Dense embeddings miss exact matches; BM25 doesn't.</td></tr>
+        <tr><td>Metadata Store</td><td>SQLite → Supabase Postgres</td><td>Pricing history, job-count time series, user watchlists. Starts as a local SQLite file, migrates to Supabase free tier in production.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Data Sources</h3>
+    <table class="stack-table">
+      <thead>
+        <tr><th>Source</th><th>Access</th><th>Feeds</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Company websites</td><td>httpx + selectolax</td><td>Web Intelligence Agent. Fast HTML parsing for static pages.</td></tr>
+        <tr><td>Dynamic pages</td><td>Playwright</td><td>Fallback for JavaScript-heavy sites (pricing pages, SPAs).</td></tr>
+        <tr><td>Greenhouse / Lever</td><td>Public JSON APIs</td><td>Hiring Signals Agent. Job postings reveal strategy.</td></tr>
+        <tr><td>SEC EDGAR</td><td>sec-edgar-downloader</td><td>Equity vertical. 10-K / 10-Q / 8-K filings.</td></tr>
+        <tr><td>Financial data</td><td>Financial Modeling Prep API</td><td>Equity vertical. Quotes, ratios, fundamentals. Free: 250 requests/day.</td></tr>
+        <tr><td>Reddit</td><td>PRAW</td><td>Sentiment Agent. r/saas, r/investing, r/wallstreetbets.</td></tr>
+        <tr><td>News</td><td>DuckDuckGo search</td><td>No API key. Good for recent news discovery.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Interface &amp; Delivery</h3>
+    <table class="stack-table">
+      <thead>
+        <tr><th>Component</th><th>Library</th><th>Role</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Slack Bot</td><td>Slack Bolt for Python</td><td>Primary interface. Socket Mode for dev (no webhook needed), HTTP for prod. Block Kit for rich responses.</td></tr>
+        <tr><td>REST API</td><td>FastAPI + Uvicorn</td><td>Secondary interface. Auto-generated OpenAPI docs at <code>/docs</code>.</td></tr>
+        <tr><td>Rate Limiting</td><td>slowapi</td><td>Protects public endpoints from abuse.</td></tr>
+        <tr><td>Scheduling</td><td>APScheduler</td><td>Background tracker jobs for pricing/hiring changes and watchlist alerts.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Infrastructure &amp; Ops</h3>
+    <table class="stack-table">
+      <thead>
+        <tr><th>Component</th><th>Service</th><th>Role</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Bot Hosting</td><td>Fly.io</td><td>Always-on Slack bot. 3 small VMs free. No spin-down.</td></tr>
+        <tr><td>API Hosting</td><td>Render</td><td>REST API. 750 free hours/month. Spins down after inactivity (acceptable for API).</td></tr>
+        <tr><td>Container</td><td>Docker + Docker Compose</td><td>Reproducible builds. Compose for local dev (Qdrant, Postgres, Redis).</td></tr>
+        <tr><td>CI / CD</td><td>GitHub Actions</td><td>Lint, test, type-check, build images, deploy on merge to main.</td></tr>
+        <tr><td>Observability</td><td>LangSmith (free tier)</td><td>Trace every LLM call and graph execution. 5K traces/month free.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Developer Experience</h3>
+    <table class="stack-table">
+      <thead>
+        <tr><th>Component</th><th>Tool</th><th>Role</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Package Mgr</td><td>uv</td><td>10-100x faster than pip. Signals modern Python tooling awareness.</td></tr>
+        <tr><td>Linter + Formatter</td><td>Ruff</td><td>Replaces Black, isort, flake8. One tool, fast.</td></tr>
+        <tr><td>Type Checker</td><td>mypy (strict)</td><td>Catches bugs before runtime. Strict mode signals discipline.</td></tr>
+        <tr><td>Tests</td><td>pytest + pytest-asyncio</td><td>Unit tests for agents, integration tests for the graph.</td></tr>
+        <tr><td>Security</td><td>Bandit + pip-audit</td><td>Static analysis for Python security issues + vulnerable deps.</td></tr>
+        <tr><td>Pre-commit</td><td>pre-commit</td><td>Runs ruff + mypy + bandit before every commit. No broken main.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============================================================
+       TAB 04 · SETUP
+       ============================================================ -->
+  <section class="tab-panel" id="setup">
+    <div class="section-marker">§04 · Provisioning</div>
+    <h2>Stand up the project, <em>step by step</em></h2>
+
+    <p class="intro">Every command you'll run on day one, in order. Assumes Windows (with PowerShell or Git Bash) or macOS / Linux. Where commands differ, both are shown.</p>
+
+    <h3>Prerequisites (install once)</h3>
+    <ol class="numbered">
+      <li><strong>Python 3.11+</strong> — grab the installer from <a href="https://python.org/downloads">python.org/downloads</a>. On Windows check <em>"Add Python to PATH"</em>. Verify: <code>python --version</code>.</li>
+      <li><strong>Git</strong> — download from <a href="https://git-scm.com">git-scm.com</a>. Verify: <code>git --version</code>.</li>
+      <li><strong>VS Code</strong> (recommended editor) — <a href="https://code.visualstudio.com">code.visualstudio.com</a>. Install the Python and Pylance extensions.</li>
+      <li><strong>Docker Desktop</strong> (optional, for local Qdrant) — <a href="https://docker.com/products/docker-desktop">docker.com</a>.</li>
+    </ol>
+
+    <h3>Step 1 — Create the project folder</h3>
+<pre data-label="terminal"><span class="cmt"># Pick a home for the project</span>
+<span class="kw">cd</span> ~/projects                      <span class="cmt"># mac/linux</span>
+<span class="kw">cd</span> C:\Users\YOU\Documents         <span class="cmt"># windows</span>
+
+<span class="cmt"># Create and enter the project directory</span>
+mkdir recon
+<span class="kw">cd</span> recon
+</pre>
+
+    <h3>Step 2 — Initialize Git</h3>
+<pre data-label="terminal">git init
+git branch -M main
+
+<span class="cmt"># Tell Git who you are (only needed once per machine)</span>
+git config --global user.name <span class="str">"Your Name"</span>
+git config --global user.email <span class="str">"you@example.com"</span>
+</pre>
+
+    <h3>Step 3 — Create a Python virtual environment</h3>
+<pre data-label="terminal">python -m venv .venv
+
+<span class="cmt"># Activate (Windows PowerShell)</span>
+.venv\Scripts\Activate.ps1
+
+<span class="cmt"># Activate (macOS/Linux or Git Bash on Windows)</span>
+<span class="kw">source</span> .venv/bin/activate
+
+<span class="cmt"># You should see (.venv) in your prompt now</span>
+</pre>
+
+    <h3>Step 4 — Install initial dependencies</h3>
+<pre data-label="terminal">pip install --upgrade pip
+
+<span class="cmt"># The smoke-test dependencies</span>
+pip install pinecone python-dotenv httpx sentence-transformers einops groq
+</pre>
+
+    <h3>Step 5 — Create the starter file structure</h3>
+<pre data-label="terminal"><span class="cmt"># Create folders</span>
+mkdir src scripts tests docs
+
+<span class="cmt"># Create key files (cross-platform)</span>
+<span class="kw">echo</span>. > .gitignore
+<span class="kw">echo</span>. > .env.template
+<span class="kw">echo</span>. > README.md
+<span class="kw">echo</span>. > requirements.txt
+</pre>
+
+    <h3>Step 6 — Populate <code>.gitignore</code></h3>
+<pre data-label=".gitignore"># <span class="cmt">Python</span>
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+build/
+
+# <span class="cmt">Secrets — NEVER commit</span>
+.env
+*.env.local
+*.key
+
+# <span class="cmt">IDE</span>
+.vscode/
+.idea/
+*.swp
+
+# <span class="cmt">OS</span>
+.DS_Store
+Thumbs.db
+
+# <span class="cmt">Project-specific</span>
+data/
+logs/
+*.sqlite
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+</pre>
+
+    <h3>Step 7 — Populate <code>.env.template</code></h3>
+<pre data-label=".env.template"># <span class="cmt">=== LLM ===</span>
+GROQ_API_KEY=your_groq_key_here
+GROQ_MODEL=llama-3.3-70b-versatile
+
+# <span class="cmt">=== Vector Store ===</span>
+VECTOR_STORE=pinecone
+PINECONE_API_KEY=your_pinecone_key_here
+PINECONE_INDEX_NAME=recon-v1
+PINECONE_CLOUD=aws
+PINECONE_REGION=us-east-1
+
+# <span class="cmt">=== Slack (add later) ===</span>
+SLACK_BOT_TOKEN=
+SLACK_APP_TOKEN=
+SLACK_SIGNING_SECRET=
+
+# <span class="cmt">=== Config ===</span>
+APP_ENV=development
+LOG_LEVEL=INFO
+</pre>
+
+    <h3>Step 8 — Copy template to your real .env and add keys</h3>
+<pre data-label="terminal"><span class="cmt"># mac/linux</span>
+cp .env.template .env
+
+<span class="cmt"># windows</span>
+copy .env.template .env
+
+<span class="cmt"># Now OPEN .env in VS Code and paste in your actual keys</span>
+<span class="cmt"># from Pinecone and Groq</span>
+code .env
+</pre>
+
+    <h3>Step 9 — Write and run the smoke test</h3>
+    <p>Create the file <code>scripts/smoke_test.py</code> with the contents below. This proves Pinecone + embeddings + Groq all work before you build anything else.</p>
+
+<pre data-label="scripts/smoke_test.py"><span class="kw">import</span> os
+<span class="kw">from</span> dotenv <span class="kw">import</span> load_dotenv
+<span class="kw">from</span> pinecone <span class="kw">import</span> Pinecone, ServerlessSpec
+<span class="kw">from</span> sentence_transformers <span class="kw">import</span> SentenceTransformer
+<span class="kw">import</span> httpx
+
+load_dotenv()
+
+<span class="cmt"># 1. Pinecone setup</span>
+pc = Pinecone(api_key=os.getenv(<span class="str">"PINECONE_API_KEY"</span>))
+index_name = os.getenv(<span class="str">"PINECONE_INDEX_NAME"</span>, <span class="str">"recon-v1"</span>)
+
+<span class="kw">if not</span> pc.has_index(index_name):
+    pc.create_index(
+        name=index_name,
+        dimension=<span class="num">768</span>,
+        metric=<span class="str">"cosine"</span>,
+        spec=ServerlessSpec(cloud=<span class="str">"aws"</span>, region=<span class="str">"us-east-1"</span>),
+    )
+
+index = pc.Index(index_name)
+
+<span class="cmt"># 2. Embedding model (downloads ~500MB first time)</span>
+embedder = SentenceTransformer(
+    <span class="str">"nomic-ai/nomic-embed-text-v1.5"</span>,
+    trust_remote_code=<span class="kw">True</span>,
+)
+
+<span class="cmt"># 3. Grab a test page</span>
+html = httpx.get(<span class="str">"https://linear.app"</span>, timeout=<span class="num">30</span>).text
+chunk = html[:<span class="num">2000</span>]
+
+<span class="cmt"># 4. Embed and upsert</span>
+vec = embedder.encode(chunk).tolist()
+index.upsert([{
+    <span class="str">"id"</span>: <span class="str">"linear-home-1"</span>,
+    <span class="str">"values"</span>: vec,
+    <span class="str">"metadata"</span>: {<span class="str">"company"</span>: <span class="str">"Linear"</span>, <span class="str">"type"</span>: <span class="str">"homepage"</span>},
+}])
+
+<span class="cmt"># 5. Query</span>
+q = embedder.encode(<span class="str">"project management for software teams"</span>).tolist()
+res = index.query(vector=q, top_k=<span class="num">3</span>, include_metadata=<span class="kw">True</span>)
+
+<span class="kw">for</span> m <span class="kw">in</span> res[<span class="str">"matches"</span>]:
+    print(<span class="str">f"score={m['score']:.3f}  meta={m['metadata']}"</span>)
+
+print(<span class="str">"✅ Pipeline working"</span>)
+</pre>
+
+<pre data-label="terminal">python scripts/smoke_test.py
+</pre>
+
+    <div class="callout">
+      <span class="tag">Expected output</span>
+      A single line showing a similarity score near 0.6–0.8 for the Linear homepage chunk, followed by <code>✅ Pipeline working</code>. If you see this, your entire vector + embedding pipeline is functional.
+    </div>
+
+    <h3>Step 10 — First Git commit</h3>
+<pre data-label="terminal">git add .
+git status                              <span class="cmt"># review what's staged</span>
+git commit -m <span class="str">"chore: initialize recon project"</span>
+</pre>
+
+    <h3>Step 11 — Create the GitHub repo</h3>
+    <ol class="numbered">
+      <li>Go to <a href="https://github.com/new">github.com/new</a></li>
+      <li>Repository name: <code>recon</code> (or <code>recon-agent</code>)</li>
+      <li>Leave it <strong>Public</strong> — it's for your portfolio</li>
+      <li>Do <em>not</em> initialize with a README (you already have one locally)</li>
+      <li>Click <strong>Create repository</strong></li>
+    </ol>
+
+    <h3>Step 12 — Connect local to remote &amp; push</h3>
+<pre data-label="terminal">git remote add origin https://github.com/YOUR-USERNAME/recon.git
+git push -u origin main
+</pre>
+
+    <p>After this, every commit follows the rhythm <code>git add .</code> → <code>git commit -m "..."</code> → <code>git push</code>.</p>
+
+    <div class="callout">
+      <span class="tag">Milestone</span>
+      You now have a working AI pipeline, a local repo, and a GitHub presence. This is the foundation. Everything else is incremental from here.
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TAB 05 · GIT
+       ============================================================ -->
+  <section class="tab-panel" id="git">
+    <div class="section-marker">§05 · Version Control Doctrine</div>
+    <h2>Git, for <em>this project</em> specifically</h2>
+
+    <p class="intro">Every command you'll realistically need, grouped by scenario. Skip the theoretical deep-dives — these are the 20 commands that cover 90% of real-world use.</p>
+
+    <h3>Daily rhythm</h3>
+<pre data-label="daily workflow">git status                                  <span class="cmt"># what's changed?</span>
+git diff                                    <span class="cmt"># show the actual changes</span>
+git add .                                   <span class="cmt"># stage everything</span>
+git add src/agents/web_intel.py            <span class="cmt"># or a specific file</span>
+git commit -m <span class="str">"feat: add web intel agent"</span>
+git push
+</pre>
+
+    <h3>Branching (use feature branches for anything non-trivial)</h3>
+<pre data-label="branching">git checkout -b feat/add-pricing-agent     <span class="cmt"># new branch</span>
+<span class="cmt"># ... make changes ...</span>
+git add . && git commit -m <span class="str">"feat: pricing agent"</span>
+git push -u origin feat/add-pricing-agent  <span class="cmt"># push new branch</span>
+
+<span class="cmt"># Merge to main via PR on GitHub, then locally:</span>
+git checkout main
+git pull
+git branch -d feat/add-pricing-agent       <span class="cmt"># cleanup</span>
+</pre>
+
+    <h3>Commit message conventions (use these!)</h3>
+    <p>Follow <a href="https://www.conventionalcommits.org">Conventional Commits</a>. Recruiters scanning your repo <em>will</em> notice.</p>
+    <ul>
+      <li><code>feat:</code> new feature — <code>feat: add reddit sentiment agent</code></li>
+      <li><code>fix:</code> bug fix — <code>fix: handle empty pinecone response</code></li>
+      <li><code>docs:</code> documentation — <code>docs: update setup instructions</code></li>
+      <li><code>refactor:</code> non-behavior code change — <code>refactor: extract vector store interface</code></li>
+      <li><code>test:</code> adding tests — <code>test: cover parse_query edge cases</code></li>
+      <li><code>chore:</code> maintenance — <code>chore: bump langgraph to 0.3</code></li>
+      <li><code>ci:</code> CI config — <code>ci: add ruff to pipeline</code></li>
+    </ul>
+
+    <h3>Fixing mistakes</h3>
+<pre data-label="undo">git restore src/broken.py                   <span class="cmt"># discard unstaged changes to file</span>
+git restore .                               <span class="cmt"># discard ALL unstaged changes</span>
+git reset HEAD src/file.py                  <span class="cmt"># unstage a file (keeps changes)</span>
+git commit --amend -m <span class="str">"new message"</span>         <span class="cmt"># fix last commit message</span>
+git revert &lt;commit-sha&gt;                     <span class="cmt"># undo a commit safely (creates new commit)</span>
+</pre>
+
+    <div class="callout">
+      <span class="tag">Warning</span>
+      Never <code>git push --force</code> on <code>main</code>. It rewrites history and will break anyone else's clone. Use <code>--force-with-lease</code> on your own feature branches only.
+    </div>
+
+    <h3>When you accidentally commit a secret</h3>
+    <p>It happens. Here's the recovery sequence:</p>
+    <ol class="numbered">
+      <li>Immediately rotate the leaked key at the provider (Pinecone, Groq, etc.)</li>
+      <li>Remove it from the code and add to <code>.gitignore</code> (if it wasn't already)</li>
+      <li>Commit the fix, push</li>
+      <li>If the commit hasn't been public long, you can rewrite history with <code>git filter-repo</code>. Otherwise accept that it's burned and only rotate.</li>
+    </ol>
+
+    <h3>Recommended learning resources</h3>
+    <div class="resource-grid">
+      <a class="resource-card" href="https://learngitbranching.js.org/" target="_blank" rel="noopener">
+        <div class="resource-meta">Interactive</div>
+        <h4>Learn Git Branching</h4>
+        <p class="resource-desc">Visual, game-like way to internalize branching. 90 minutes well spent.</p>
+      </a>
+      <a class="resource-card" href="https://ohshitgit.com/" target="_blank" rel="noopener">
+        <div class="resource-meta">Reference</div>
+        <h4>Oh Shit, Git!?</h4>
+        <p class="resource-desc">Plain-English recovery commands for every "I broke it" moment.</p>
+      </a>
+      <a class="resource-card" href="https://www.atlassian.com/git/tutorials" target="_blank" rel="noopener">
+        <div class="resource-meta">Tutorials</div>
+        <h4>Atlassian Git Tutorials</h4>
+        <p class="resource-desc">Deepest free reference for workflows, strategies, and advanced commands.</p>
+      </a>
+      <a class="resource-card" href="https://www.conventionalcommits.org" target="_blank" rel="noopener">
+        <div class="resource-meta">Spec</div>
+        <h4>Conventional Commits</h4>
+        <p class="resource-desc">The commit-message convention used by the repo.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TAB 06 · PYTHON
+       ============================================================ -->
+  <section class="tab-panel" id="python">
+    <div class="section-marker">§06 · Python Foundations</div>
+    <h2>The Python you <em>need</em> for this project</h2>
+
+    <p class="intro">Not a full course — just the concepts you'll actually touch. Work through these in order. If a concept feels shaky, stop and practice it before moving on.</p>
+
+    <h3>Tier 1 — Absolute essentials (cannot skip)</h3>
+    <ul class="check">
+      <li><strong>Variables, types, f-strings</strong> — the bread and butter.</li>
+      <li><strong>Functions</strong> — <code>def</code>, positional vs keyword args, <code>return</code>.</li>
+      <li><strong>Data structures</strong> — <code>list</code>, <code>dict</code>, <code>tuple</code>, <code>set</code>. Dict comprehensions especially.</li>
+      <li><strong>Control flow</strong> — <code>if</code>, <code>for</code>, <code>while</code>, <code>try/except</code>.</li>
+      <li><strong>File I/O</strong> — <code>with open(...) as f:</code> pattern.</li>
+      <li><strong>Modules &amp; imports</strong> — how <code>from package.module import thing</code> works.</li>
+    </ul>
+
+    <h3>Tier 2 — Critical for this project</h3>
+    <ul class="check">
+      <li><strong>Classes &amp; methods</strong> — <code>__init__</code>, instance vs class methods. Not OOP-heavy but you need to read them.</li>
+      <li><strong>Type hints</strong> — <code>def f(x: str) -> list[dict]:</code>. Used everywhere in this project.</li>
+      <li><strong>Virtual environments</strong> — why <code>.venv</code> exists, how activation works.</li>
+      <li><strong>pip and requirements.txt</strong> — installing and pinning dependencies.</li>
+      <li><strong>Environment variables</strong> — <code>os.getenv</code>, python-dotenv.</li>
+      <li><strong>JSON handling</strong> — <code>json.loads</code>, <code>json.dumps</code>.</li>
+    </ul>
+
+    <h3>Tier 3 — Advanced but unavoidable here</h3>
+    <ul class="check">
+      <li><strong>Async / await</strong> — <code>asyncio.gather</code> is how agents run in parallel. <mark>Learn this.</mark></li>
+      <li><strong>Pydantic models</strong> — <code>class X(BaseModel)</code>. Enforces LLM output schemas.</li>
+      <li><strong>Decorators</strong> — <code>@app.get("/quote")</code> in FastAPI, <code>@bolt.command</code> in Slack.</li>
+      <li><strong>Context managers</strong> — <code>async with httpx.AsyncClient() as c:</code>.</li>
+      <li><strong>Protocols / Interfaces</strong> — <code>typing.Protocol</code> for the <code>VectorStore</code> abstraction.</li>
+      <li><strong>TypedDict</strong> — for LangGraph state objects.</li>
+    </ul>
+
+    <h3>The single most useful async pattern to memorize</h3>
+<pre data-label="parallel agents">
+<span class="kw">import</span> asyncio
+
+<span class="kw">async def</span> run_all_agents(query: str) -> dict:
+    <span class="cmt"># Launch all agents concurrently</span>
+    results = <span class="kw">await</span> asyncio.gather(
+        web_intel_agent(query),
+        hiring_agent(query),
+        sentiment_agent(query),
+        pricing_agent(query),
+        return_exceptions=<span class="kw">True</span>,   <span class="cmt"># don't fail all if one fails</span>
+    )
+    <span class="kw">return</span> {
+        <span class="str">"web"</span>: results[<span class="num">0</span>],
+        <span class="str">"hiring"</span>: results[<span class="num">1</span>],
+        <span class="str">"sentiment"</span>: results[<span class="num">2</span>],
+        <span class="str">"pricing"</span>: results[<span class="num">3</span>],
+    }
+</pre>
+    <p>If you understand this snippet — <em>why</em> it runs in parallel, <em>why</em> <code>return_exceptions=True</code> matters — you understand the core of the Recon orchestration.</p>
+
+    <h3>Recommended learning resources</h3>
+    <div class="resource-grid">
+      <a class="resource-card" href="https://realpython.com/" target="_blank" rel="noopener">
+        <div class="resource-meta">Tutorials</div>
+        <h4>Real Python</h4>
+        <p class="resource-desc">Deepest free Python tutorials on the internet. Start with the Python Basics learning path.</p>
+      </a>
+      <a class="resource-card" href="https://automatetheboringstuff.com/" target="_blank" rel="noopener">
+        <div class="resource-meta">Book · Free</div>
+        <h4>Automate the Boring Stuff</h4>
+        <p class="resource-desc">Best zero-to-hero beginner resource. Free to read online.</p>
+      </a>
+      <a class="resource-card" href="https://realpython.com/async-io-python/" target="_blank" rel="noopener">
+        <div class="resource-meta">Async</div>
+        <h4>Async IO in Python</h4>
+        <p class="resource-desc">The <em>only</em> async guide you need to read before building agents.</p>
+      </a>
+      <a class="resource-card" href="https://docs.pydantic.dev/" target="_blank" rel="noopener">
+        <div class="resource-meta">Docs</div>
+        <h4>Pydantic v2 Docs</h4>
+        <p class="resource-desc">Official. The <em>Getting Started</em> page is 15 min and covers 80% of use cases.</p>
+      </a>
+      <a class="resource-card" href="https://fastapi.tiangolo.com/tutorial/" target="_blank" rel="noopener">
+        <div class="resource-meta">Framework</div>
+        <h4>FastAPI Tutorial</h4>
+        <p class="resource-desc">Best-in-class docs. Go through First Steps through Path Parameters.</p>
+      </a>
+      <a class="resource-card" href="https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html" target="_blank" rel="noopener">
+        <div class="resource-meta">Reference</div>
+        <h4>Mypy Type Hints Cheat Sheet</h4>
+        <p class="resource-desc">One page covering every type hint you'll write in this project.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TAB 07 · APIs
+       ============================================================ -->
+  <section class="tab-panel" id="api">
+    <div class="section-marker">§07 · External Interfaces</div>
+    <h2>Every API Recon <em>talks to</em></h2>
+
+    <p class="intro">For each external service, what it does, how to authenticate, and what the first request looks like. Keep this tab open during development.</p>
+
+    <h3>Groq — LLM inference</h3>
+    <table class="stack-table">
+      <tr><td>Purpose</td><td>—</td><td>Primary LLM for query parsing, agent reasoning, and final synthesis.</td></tr>
+      <tr><td>Auth</td><td>API key</td><td><code>GROQ_API_KEY</code> header: <code>Authorization: Bearer ...</code></td></tr>
+      <tr><td>Rate limit</td><td>Free tier</td><td>~30 requests/min on Llama 3.3 70B. Plenty for a portfolio.</td></tr>
+      <tr><td>Docs</td><td>—</td><td><a href="https://console.groq.com/docs">console.groq.com/docs</a></td></tr>
+    </table>
+
+<pre data-label="groq_example.py"><span class="kw">from</span> groq <span class="kw">import</span> Groq
+<span class="kw">import</span> os
+
+client = Groq(api_key=os.getenv(<span class="str">"GROQ_API_KEY"</span>))
+
+response = client.chat.completions.create(
+    model=<span class="str">"llama-3.3-70b-versatile"</span>,
+    messages=[
+        {<span class="str">"role"</span>: <span class="str">"system"</span>, <span class="str">"content"</span>: <span class="str">"You are a research analyst."</span>},
+        {<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: <span class="str">"Summarize Linear's product in 3 bullets."</span>},
+    ],
+    temperature=<span class="num">0.3</span>,
+)
+print(response.choices[<span class="num">0</span>].message.content)
+</pre>
+
+    <h3>Pinecone — vector database</h3>
+    <table class="stack-table">
+      <tr><td>Purpose</td><td>—</td><td>Store document embeddings, serve hybrid retrieval queries.</td></tr>
+      <tr><td>Auth</td><td>API key</td><td><code>PINECONE_API_KEY</code></td></tr>
+      <tr><td>Limits</td><td>Starter tier</td><td>2GB storage, 100K vectors, 1 index</td></tr>
+      <tr><td>Docs</td><td>—</td><td><a href="https://docs.pinecone.io">docs.pinecone.io</a></td></tr>
+    </table>
+
+<pre data-label="pinecone_example.py"><span class="kw">from</span> pinecone <span class="kw">import</span> Pinecone, ServerlessSpec
+
+pc = Pinecone(api_key=os.getenv(<span class="str">"PINECONE_API_KEY"</span>))
+
+<span class="cmt"># Upsert</span>
+index = pc.Index(<span class="str">"recon-v1"</span>)
+index.upsert([{
+    <span class="str">"id"</span>: <span class="str">"doc-1"</span>,
+    <span class="str">"values"</span>: [<span class="num">0.1</span>, <span class="num">0.2</span>, ...],  <span class="cmt"># 768-dim from Nomic</span>
+    <span class="str">"metadata"</span>: {<span class="str">"company"</span>: <span class="str">"Linear"</span>, <span class="str">"source"</span>: <span class="str">"homepage"</span>},
+}])
+
+<span class="cmt"># Query with metadata filter</span>
+results = index.query(
+    vector=[<span class="num">0.1</span>, <span class="num">0.2</span>, ...],
+    top_k=<span class="num">5</span>,
+    <span class="kw">filter</span>={<span class="str">"company"</span>: {<span class="str">"$eq"</span>: <span class="str">"Linear"</span>}},
+    include_metadata=<span class="kw">True</span>,
+)
+</pre>
+
+    <h3>Slack — bot interface</h3>
+    <table class="stack-table">
+      <tr><td>Purpose</td><td>—</td><td>Primary user interface. Receive commands, post threaded replies.</td></tr>
+      <tr><td>Auth</td><td>Two tokens</td><td><code>SLACK_BOT_TOKEN</code> (actions) + <code>SLACK_APP_TOKEN</code> (Socket Mode WebSocket)</td></tr>
+      <tr><td>Setup</td><td>—</td><td>Create app at <a href="https://api.slack.com/apps">api.slack.com/apps</a> → enable Socket Mode → add OAuth scopes (<code>chat:write</code>, <code>commands</code>, <code>app_mentions:read</code>)</td></tr>
+    </table>
+
+<pre data-label="slack_example.py"><span class="kw">from</span> slack_bolt <span class="kw">import</span> App
+<span class="kw">from</span> slack_bolt.adapter.socket_mode <span class="kw">import</span> SocketModeHandler
+
+app = App(token=os.getenv(<span class="str">"SLACK_BOT_TOKEN"</span>))
+
+<span class="kw">@app.command</span>(<span class="str">"/recon"</span>)
+<span class="kw">def</span> handle_recon(ack, say, command):
+    ack()  <span class="cmt"># acknowledge within 3 sec or Slack complains</span>
+    query = command[<span class="str">"text"</span>]
+    say(<span class="str">f"🔍 Researching: {query}..."</span>)
+    <span class="cmt"># kick off the agent pipeline here</span>
+
+<span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
+    SocketModeHandler(app, os.getenv(<span class="str">"SLACK_APP_TOKEN"</span>)).start()
+</pre>
+
+    <h3>SEC EDGAR — filings</h3>
+    <table class="stack-table">
+      <tr><td>Purpose</td><td>—</td><td>Download 10-K / 10-Q / 8-K filings for the equity vertical.</td></tr>
+      <tr><td>Auth</td><td>None</td><td>But SEC <em>requires</em> a descriptive User-Agent header with contact email.</td></tr>
+      <tr><td>Library</td><td>—</td><td><code>sec-edgar-downloader</code></td></tr>
+    </table>
+
+    <h3>FastAPI — exposing your own REST API</h3>
+    <p>This is the one API that's <em>yours</em>. Recon exposes endpoints for other apps to call.</p>
+<pre data-label="api/main.py"><span class="kw">from</span> fastapi <span class="kw">import</span> FastAPI
+<span class="kw">from</span> pydantic <span class="kw">import</span> BaseModel
+
+app = FastAPI(title=<span class="str">"Recon API"</span>, version=<span class="str">"0.1.0"</span>)
+
+<span class="kw">class</span> AnalyzeRequest(BaseModel):
+    query: str
+    companies: list[str] = []
+
+<span class="kw">@app.post</span>(<span class="str">"/analyze"</span>)
+<span class="kw">async def</span> analyze(req: AnalyzeRequest):
+    <span class="cmt"># Invokes the same LangGraph pipeline as Slack</span>
+    result = <span class="kw">await</span> run_research_graph(req.query)
+    <span class="kw">return</span> result
+
+<span class="kw">@app.get</span>(<span class="str">"/health"</span>)
+<span class="kw">def</span> health():
+    <span class="kw">return</span> {<span class="str">"status"</span>: <span class="str">"ok"</span>}
+</pre>
+
+    <p>Run it: <code>uvicorn src.api.main:app --reload</code>. Auto-generated docs at <code>http://localhost:8000/docs</code>.</p>
+
+    <h3>Reference links</h3>
+    <div class="resource-grid">
+      <a class="resource-card" href="https://console.groq.com/docs" target="_blank" rel="noopener">
+        <div class="resource-meta">Docs</div>
+        <h4>Groq API Docs</h4>
+        <p class="resource-desc">Model list, rate limits, streaming, JSON mode.</p>
+      </a>
+      <a class="resource-card" href="https://docs.pinecone.io/guides/get-started/quickstart" target="_blank" rel="noopener">
+        <div class="resource-meta">Docs</div>
+        <h4>Pinecone Quickstart</h4>
+        <p class="resource-desc">Index creation, upsert, query, metadata filtering.</p>
+      </a>
+      <a class="resource-card" href="https://slack.dev/bolt-python/concepts" target="_blank" rel="noopener">
+        <div class="resource-meta">Docs</div>
+        <h4>Slack Bolt for Python</h4>
+        <p class="resource-desc">Official concepts guide. Covers Socket Mode, Block Kit, events.</p>
+      </a>
+      <a class="resource-card" href="https://fastapi.tiangolo.com/" target="_blank" rel="noopener">
+        <div class="resource-meta">Docs</div>
+        <h4>FastAPI</h4>
+        <p class="resource-desc">Tutorial-driven docs. Readable cover to cover.</p>
+      </a>
+      <a class="resource-card" href="https://langchain-ai.github.io/langgraph/" target="_blank" rel="noopener">
+        <div class="resource-meta">Docs</div>
+        <h4>LangGraph</h4>
+        <p class="resource-desc">Quickstart through multi-agent patterns. Your orchestration bible.</p>
+      </a>
+      <a class="resource-card" href="https://python.langchain.com/docs/introduction/" target="_blank" rel="noopener">
+        <div class="resource-meta">Docs</div>
+        <h4>LangChain</h4>
+        <p class="resource-desc">Used lightly; focus on the <em>Concepts</em> and <em>Runnables</em> pages.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TAB 08 · LEARNING PATH
+       ============================================================ -->
+  <section class="tab-panel" id="learn">
+    <div class="section-marker">§08 · Curriculum</div>
+    <h2>A 14-day plan for <em>learning while building</em></h2>
+
+    <p class="intro">You don't need to master everything first. Learn each concept at the moment you need it. Here's the order.</p>
+
+    <div class="pipeline">
+      <div class="pipeline-step">
+        <div class="num-badge">D1</div>
+        <div class="content">
+          <h4>Day 1 — Environment + Smoke Test</h4>
+          <div class="tech">Topics: Python basics · venv · git init · API keys</div>
+          <p>Follow the Setup tab. Get the smoke test passing. Commit and push to GitHub. <strong>Goal:</strong> prove your tools work.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">D2</div>
+        <div class="content">
+          <h4>Day 2 — Python refresh</h4>
+          <div class="tech">Topics: type hints · async/await · Pydantic · decorators</div>
+          <p>Work through Tier 2 and the critical async pattern from the Python tab. Don't build anything — just read and run small snippets.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">D3-4</div>
+        <div class="content">
+          <h4>Days 3–4 — First web scraper + vector store abstraction</h4>
+          <div class="tech">Topics: httpx · BeautifulSoup/selectolax · Protocol class</div>
+          <p>Write a function that fetches a company's homepage, extracts clean text, chunks it, embeds, upserts to Pinecone. Then wrap Pinecone behind a <code>VectorStore</code> Protocol so you can swap in Qdrant later.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">D5-6</div>
+        <div class="content">
+          <h4>Days 5–6 — First agent</h4>
+          <div class="tech">Topics: prompt engineering · Groq API · structured output</div>
+          <p>Build the Web Intelligence Agent end-to-end. Give it a company name, it returns a Pydantic object with <code>{value_prop, target_customer, key_features}</code>. No orchestration yet — just one agent working well.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">D7-8</div>
+        <div class="content">
+          <h4>Days 7–8 — LangGraph orchestration</h4>
+          <div class="tech">Topics: StateGraph · conditional edges · parallel fan-out</div>
+          <p>Add a second agent (Hiring Signals). Wire both into a LangGraph StateGraph. Prove they run in parallel via <code>asyncio.gather</code>. Add a synthesizer node that combines both outputs.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">D9-10</div>
+        <div class="content">
+          <h4>Days 9–10 — Slack interface</h4>
+          <div class="tech">Topics: Slack Bolt · Socket Mode · Block Kit</div>
+          <p>Create your Slack app. Wire the <code>/recon</code> slash command to your LangGraph pipeline. Format the output with Block Kit so it looks polished. First demo-able milestone.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">D11</div>
+        <div class="content">
+          <h4>Day 11 — FastAPI REST interface</h4>
+          <div class="tech">Topics: FastAPI · Uvicorn · OpenAPI</div>
+          <p>Expose the same pipeline as a REST API. <code>POST /analyze</code>. Test with <code>curl</code> and the auto-generated <code>/docs</code> UI.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">D12</div>
+        <div class="content">
+          <h4>Day 12 — Deployment</h4>
+          <div class="tech">Topics: Dockerfile · Fly.io · Render · env vars in prod</div>
+          <p>Containerize the bot. Deploy to Fly.io. Deploy the API to Render. Verify both work from the public internet. Huge motivation boost here.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">D13</div>
+        <div class="content">
+          <h4>Day 13 — Evaluation + tests</h4>
+          <div class="tech">Topics: pytest · RAGAS · GitHub Actions</div>
+          <p>Write 10 unit tests. Set up a small RAGAS eval set (5 questions, 5 ground truths). Wire into GitHub Actions so every push runs tests.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-step">
+        <div class="num-badge">D14</div>
+        <div class="content">
+          <h4>Day 14 — Polish + demo</h4>
+          <div class="tech">Topics: README · GIFs · resume bullets</div>
+          <p>Write a killer README with architecture diagram and demo GIF. Record a 60-second Loom video. Add 2–3 resume bullet points. Push the final commit and declare victory.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="tag">Honest reality check</span>
+      14 days is aggressive. Real-world this might take 3–5 weeks of evenings. That's completely fine. The plan is the <em>order</em>, not the <em>deadline</em>. Ship at your own pace — just keep shipping.
+    </div>
+
+    <h3>Beyond Day 14 — what to add next</h3>
+    <ul>
+      <li><strong>More agents</strong> — Pricing, Product, Sentiment, Tech Stack, Funding</li>
+      <li><strong>Second vertical</strong> — Equity Research (SEC + Finnhub + Reddit)</li>
+      <li><strong>Hybrid retrieval</strong> — add BM25 + RRF over dense-only</li>
+      <li><strong>Evaluation dashboard</strong> — Streamlit page showing RAGAS scores over time</li>
+      <li><strong>Multi-agent debate</strong> — Bull analyst vs Bear analyst vs Judge</li>
+      <li><strong>ADRs</strong> — <code>docs/adr/0001-why-langgraph.md</code> and friends</li>
+    </ul>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <strong>Project</strong>
+        Recon v0.1.0<br>
+        Portfolio Build<br>
+        April 2026
+      </div>
+      <div>
+        <strong>Stack</strong>
+        Python · LangGraph<br>
+        Pinecone · Groq<br>
+        Slack · FastAPI
+      </div>
+      <div>
+        <strong>Hosting</strong>
+        Fly.io · Render<br>
+        GitHub Actions<br>
+        LangSmith
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Document classification · Public / Portfolio</span>
+      <span>Dossier RCN-001 · End of File</span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // Tab switching
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(target).classList.add('active');
+      // Scroll to top of content
+      window.scrollTo({ top: document.querySelector('.tabs-nav').offsetTop, behavior: 'smooth' });
+    });
+  });
+</script>
+
+</body>
+</html>
